@@ -213,14 +213,14 @@ swift_store_region = <%= node["openstack"]["image"]["api"]["swift"]["store_regio
 # Address where the S3 authentication service lives
 # Valid schemes are 'http://' and 'https://'
 # If no scheme specified,  default to 'http://'
-s3_store_host = 127.0.0.1:8080/v1.0/
+s3_store_host =  <%= node["openstack"]["image"]["api"]["s3"]["store_host"] %>
 
 # User to authenticate against the S3 authentication service
-s3_store_access_key = <20-char AWS access key>
+s3_store_access_key =  <%= node["openstack"]["image"]["api"]["s3"]["access_key"] %>
 
 # Auth key for the user authenticating against the
 # S3 authentication service
-s3_store_secret_key = <40-char AWS secret key>
+s3_store_secret_key =  <%= node["openstack"]["image"]["api"]["s3"]["secret_key"] %>
 
 # Container within the account that the account should use
 # for storing images in S3. Note that S3 has a flat namespace,
@@ -228,10 +228,10 @@ s3_store_secret_key = <40-char AWS secret key>
 # easy way to do this is append your AWS access key to "glance".
 # S3 buckets in AWS *must* be lowercased, so remember to lowercase
 # your AWS access key if you use it in your bucket name below!
-s3_store_bucket = <lowercased 20-char aws access key>glance
+s3_store_bucket = <%= node["openstack"]["image"]["api"]["s3"]["access_key"].downcase %><%= node["openstack"]["image"]["api"]["s3"]["bucket"] %>
 
 # Do we create the bucket if it does not exist?
-s3_store_create_bucket_on_put = False
+s3_store_create_bucket_on_put = True
 
 # When sending images to S3, the data will first be written to a
 # temporary buffer on disk. By default the platform's temporary directory
