@@ -114,7 +114,12 @@ amqp_auto_delete=<%= node["openstack"]["mq"]["image"]["auto_delete"] %>
 <% if @mq_service_type == "rabbitmq" %>
 ##### RABBITMQ #####
 transport_url = rabbit://
+<% if node["openstack"]["mq"]["image"]["rabbit"]["ha"] -%>
+rabbit_hosts = <%= @rabbit_hosts %>
+rabbit_ha_queues = True
+<% else -%>
 rabbit_host = <%= node["openstack"]["mq"]["image"]["rabbit"]["host"] %>
+<% end -%>
 rabbit_port = <%= node["openstack"]["mq"]["image"]["rabbit"]["port"] %>
 rabbit_use_ssl = false
 rabbit_userid = <%= node["openstack"]["mq"]["image"]["rabbit"]["userid"] %>

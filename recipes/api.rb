@@ -119,6 +119,7 @@ sql_connection = db_uri('image', db_user, db_pass)
 mq_service_type = node['openstack']['mq']['image']['service_type']
 
 if mq_service_type == 'rabbitmq'
+  node['openstack']['mq']['image']['rabbit']['ha'] && (rabbit_hosts = rabbit_servers)
   mq_password = get_password 'user', node['openstack']['mq']['image']['rabbit']['userid']
 elsif mq_service_type == 'qpid'
   mq_password = get_password 'user', node['openstack']['mq']['image']['qpid']['username']
@@ -184,6 +185,7 @@ template '/etc/glance/glance-api.conf' do
     swift_store_auth_address: swift_store_auth_address,
     swift_store_auth_version: swift_store_auth_version,
     notification_driver: node['openstack']['image']['notification_driver'],
+    rabbit_hosts: rabbit_hosts,
     mq_service_type: mq_service_type,
     mq_password: mq_password,
     vmware_server_password: vmware_server_password
